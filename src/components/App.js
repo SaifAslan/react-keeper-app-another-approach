@@ -12,6 +12,12 @@ import CreatNote from "./createNote"
 function App(){
   const [notes ,setNotes] = useState([]);
 
+  function onDelete(id){
+    return setNotes(prevNotes =>
+      prevNotes.filter((note,index)=>{
+      return id !== index
+    }))
+  }
 
   function AddNote(notes){
     setNotes(prevNotes=>{
@@ -24,9 +30,18 @@ function App(){
 <CreatNote 
   onAdd = {AddNote}
 />
-<Note 
-  notes = {notes}
-/>
+{notes.map((note,index)=>{
+                return(
+                  <Note 
+                  key={index}
+                  id={index}
+title={note.title}
+content ={note.content}
+onDelete={onDelete}
+                  />
+                  )
+                  })
+                }
 <Footer />
 </div>
 }
